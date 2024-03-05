@@ -1,0 +1,120 @@
+Database
+    Table: member
+        id          - integer               - unique + autogen
+        eid         - string                - unique
+        f_name      - string
+        l_name      - string
+        doj         - date 
+        level       - string (Enum?)        - default = p01
+        location    - string (Enum?)
+        overall_exp - float/double
+        status      - boolean (Enum?)       - default = false
+        dem_id      - integer               - default = null
+        skills      - JSON (string, int)    - default = {}
+            
+
+    Table: demand
+        id          - integer               - unique + autogen
+        proj_name   - string
+        mgr_name    - string
+        level       - string (Enum?)        
+        city        - string (Enum?)
+        skills      - JSON (string, int)    - default = {}
+        status      - boolean (Enum?)       - default = false
+        mem_id      - integer               - default = null    
+        duration    - float/double          
+        startDate   - date
+
+
+A member can be any employee of the company, at any level in the hierarchy.
+each member has a unique id (employee number) and eid (alphabetic)
+date of joining shall be kept
+each member has a location assigned to them
+each memebr has a status denoting whether he is currently assigned a project or not
+each member has a set of skills and for each skill, years of experience
+each member has a manager whom he reports to
+
+
+each demand request has a unique id
+each demand must have the name of manager who put the request
+each demand must have the name of project for which request made
+each demand must specifiy the level of member required
+each demand must specify the city
+each demand must list the skills required, can be empty as well
+each demand must have a status of either fulfilled or unfulfilled
+each demand must have a duration for which member to be assigned to project
+each demand must have a startDate
+
+Flow:
+1. Create a restAPI which accepts demand request and persist the data.
+=> 
+    A post request endpoint receives a JSON
+        {
+            proj_name,
+            mgr_name,
+            level,       
+            city,
+            skills,
+            duration,        
+            startDate
+        }
+    An object of demand is created
+        - unique id is generated and assigned automatically
+        - status is 'false' (or 'unfulfilled' for enum) by default
+        - duration may or may not be in json, provision for indefinite duration
+        - all other fields must be there in the json
+        - sanitizing the json before any update to db is a good idea
+
+    Such object so created is put into the db
+    Such object so created is sent back as response
+    There simply cannot be collison between two demands while creation
+
+2. Create a restAPI to retrieve demands by {city, manager, project, status, fulfillment}
+=>
+    A get request endpoint receives a request with or without parameters
+    The demand table is iterated through to match the requirements specified in the parameters
+    The list so created is then sent as a response
+    The list if empty, some specific behavior can be programmed
+
+3. Create a restAPI to retrieve list of members fulfilling a demand based on demand id and sort (doj, name, city)
+=>
+    A get request endpoint receives a request with id parameter
+    if an entry with such demand id exists in the demands table
+        if it is unfulfilled
+            - fetch the requirements from such demand request
+            - the members table is iterated through to match requirements obtained in previous step
+            - the list so created shall be sorted by (doj, name, city)
+            - the list so created is then sent as a response
+            - if list is empty, some specific behavior can be programmed
+        else
+            - some specific behavior can be programmed
+    else
+        - failure, some specific behavior can be programmed
+
+3. Create a restAPI to retrieve list of members fulfilling given parameters {level, exp, city, skills} and sort (doj, name, city)
+=>
+    A get request endpoint receives a request with or without parameters
+        - the requirements to be fulfilled by member are listed as parameters
+        - sanitization of parameters is good idea
+        - the members table is iterated through to match requirements obtained from parameters
+        - all the same steps as discussed in the above getMembersByDemandID endpoint
+        - ...
+
+4. Create a restAPI to fulfill a demand request by taking in demand id and member id and assigning them to each other
+=>
+    A post(?) request endpoint receives a request with a JSON
+        {
+            dem_id,
+            mem_id
+        }
+    both dem_id and mem_id are checked for presence in their tables
+    both are checked whether unfulfilled and unassigned
+    if yes 
+        - update both tables
+        - return appropriate response
+    if not
+        - failure, some specific behavior can be programmed
+        - if dem_id is unfulfilled and member is assigned
+            - member could be re-assigned
+            - or maybe not
+            - interesting how this exchange will take place between server and client
