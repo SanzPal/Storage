@@ -118,3 +118,34 @@ Flow:
             - member could be re-assigned
             - or maybe not
             - interesting how this exchange will take place between server and client
+
+
+ADDITIONAL:
+Skill Table (Optional):
+Consider creating a separate table for skills if skills are expected to be a central aspect of your application. This table can have entries for each skill, and members and demands can have relationships with these skills.
+
+```sql
+CREATE TABLE skill (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) UNIQUE
+);
+
+CREATE TABLE member_skill (
+    member_id INTEGER,
+    skill_id INTEGER,
+    experience INTEGER,
+    PRIMARY KEY (member_id, skill_id),
+    FOREIGN KEY (member_id) REFERENCES member(id),
+    FOREIGN KEY (skill_id) REFERENCES skill(id)
+);
+
+CREATE TABLE demand_skill (
+    demand_id INTEGER,
+    skill_id INTEGER,
+    PRIMARY KEY (demand_id, skill_id),
+    FOREIGN KEY (demand_id) REFERENCES demand(id),
+    FOREIGN KEY (skill_id) REFERENCES skill(id)
+);
+```
+
+This introduces a separate skill table and two associative tables (member_skill and demand_skill) to establish many-to-many relationships between members, demands, and skills.
