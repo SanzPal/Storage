@@ -1,0 +1,9 @@
+com\example\crudapp\controllers\MemberController.class
+com\example\crudapp\models\Demand.class
+com\example\crudapp\models\Member.class
+com\example\crudapp\repos\DemandRepository.class
+com\example\crudapp\repos\MemberRepository.class
+com\example\crudapp\controllers\DemandController.class
+com\example\crudapp\models\DemandRequest.class
+com\example\crudapp\CrudappApplication.class
+com\example\crudapp\helpers\CustomComparator.class
