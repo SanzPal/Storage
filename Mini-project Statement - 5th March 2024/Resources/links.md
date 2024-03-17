@@ -1,0 +1,1 @@
+* [Dynamic Queries - Medium.com](https://medium.com/geekculture/dynamic-search-filter-query-based-on-user-inputs-with-hibernate-mysql-spring-boot-85e842dcf8d)
