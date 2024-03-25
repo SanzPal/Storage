@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.3.1/dist/semantic.min.css">
+    <title>A Vanilla Website</title>
+</head>
+<body>
+    <!-- <h1>Hello, World!</h1>
+        <div id="root"></div>
+        
+        <script src="/src/script.js"></script> -->
+        
+    <template id="todo-container">
+        <div class="item-block">
+            <button class="ui icon button" data-attr="done"><i class="circle outline icon"></i></button>
+            <div class="text-block"></div>
+            <button class="ui icon button" data-attr="delete"><i class="trash red icon"></i></button>
+        </div>
+    </template>
+    
+    <div class="container">
+        <h1 class="header">Todo List</h1>
+        
+        <form id="create-items" class="ui form">
+            <div class="ui input focus">
+                <input type="text" id="inputItem" name="item" placeholder="Add Item">
+            </div>
+            <div class="ui buttons">
+                <button class="ui icon grey button"><i class="icon plus"></i></button>
+                <div class="or"></div>
+                <button type="button" class="ui icon black button btn-search"><i class="icon search"></i></button>
+            </div>
+        </form>
+        
+        <section id='root' class="list-items"></section>
+    </div>
+
+    <script src="/static/script.js"></script>
+
+</body>
+</html>

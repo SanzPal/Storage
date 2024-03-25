@@ -1,0 +1,20 @@
+{
+  "name": "html_css_js",
+  "version": "1.0.0",
+  "description": "Just a frontend basic project using HTML, CSS and Vanilla JS",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sanjivan Pal",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "express": "^4.19.1",
+    "morgan": "^1.10.0"
+  }
+}
